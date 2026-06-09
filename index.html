@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Monetag Ads</title>
+
+<script src='//libtl.com/sdk.js' data-zone='11115482' data-sdk='show_11115482'></script>
+
+
+    <!-- Include Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --bg-dark: #121212;
+            --card-bg: #1e1e1e;
+            --primary: #00c853;
+            --primary-hover: #00e676;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --danger: #f44336;
+            --warning: #ff9800;
+            --info: #2196f3;
+            --secondary: #333333;
+            --secondary-hover: #444444;
+            --card-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+
+        /* Base Body Styles */
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        /* Main Dashboard Container */
+        .dashboard {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            width: 100%;
+            max-width: 700px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .title-section h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .meta-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Status Indicator */
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.05);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .status-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--danger); /* Default Stopped */
+            box-shadow: 0 0 10px var(--danger);
+            transition: all 0.3s ease;
+        }
+
+        .status-circle.running {
+            background-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+            animation: pulse 1.5s infinite;
+        }
+
+        .status-circle.paused {
+            background-color: var(--warning);
+            box-shadow: 0 0 10px var(--warning);
+        }
+
+        .status-circle.completed {
+            background-color: var(--info);
+            box-shadow: 0 0 10px var(--info);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-card {
+            background-color: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 200, 83, 0.4);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-value.small {
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin: 5px 0;
+        }
+
+        .progress-bar-bg {
+            background-color: rgba(255,255,255,0.1);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            background-color: var(--primary);
+            height: 100%;
+            width: 0%;
+            transition: width 0.1s linear;
+            border-radius: 4px;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .progress-text {
+            text-align: right;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        /* Buttons Grid */
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: white;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            filter: grayscale(0.5);
+        }
+
+        .btn:not(:disabled):hover {
+            transform: translateY(-2px);
+            filter: brightness(1.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-start { background-color: var(--primary); color: #000; }
+        .btn-stop { background-color: var(--danger); }
+        .btn-pause { background-color: var(--warning); color: #000; }
+        .btn-resume { background-color: var(--info); }
+        .btn-reset { background-color: var(--secondary); }
+        .btn-export { background-color: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-main); }
+        .btn-export:not(:disabled):hover { background-color: rgba(255,255,255,0.05); }
+
+        /* Settings Panel */
+        .settings-panel {
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .settings-panel h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+            color: var(--text-muted);
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
+        }
+
+        .setting-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .setting-group label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .setting-group input {
+            background-color: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .setting-group input:focus {
+            border-color: var(--primary);
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .toast {
+            background-color: #2a2a2a;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            font-size: 0.9rem;
+            font-weight: 500;
+            animation: slideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, fadeOut 0.3s ease 3.7s forwards;
+            border-left: 4px solid var(--primary);
+            min-width: 200px;
+        }
+
+        .toast.error { border-left-color: var(--danger); }
+        .toast.info { border-left-color: var(--info); }
+        .toast.warning { border-left-color: var(--warning); }
+
+        @keyframes slideIn {
+            from { transform: translateX(120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(120%); opacity: 0; }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 600px) {
+            .dashboard { padding: 20px; }
+            .header { flex-direction: column; align-items: flex-start; }
+            .meta-info { align-items: flex-start; margin-top: 10px; }
+            .status-indicator { align-self: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <!-- Header -->
+        <div class="header">
+            <div class="title-section">
+                <h1>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                    Auto Monetag Ads
+                </h1>
+                <div class="status-indicator">
+                    <div class="status-circle" id="status-circle"></div>
+                    <span id="status-text">Stopped</span>
+                </div>
+            </div>
+            <div class="meta-info">
+                <div id="clock">00:00:00</div>
+                <div>Runtime: <span id="runtime-counter">00:00:00</span></div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progress-bar-fill"></div>
+            </div>
+            <div class="progress-text" id="progress-text">Ready</div>
+        </div>
+
+        <!-- Statistics Section -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Watched Ads</div>
+                <div class="stat-value" id="stat-ads">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Reload Count</div>
+                <div class="stat-value" id="stat-reloads">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Session Starts</div>
+                <div class="stat-value" id="stat-sessions">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Remaining Reloads</div>
+                <div class="stat-value" id="stat-remaining">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Last Ad Time</div>
+                <div class="stat-value small" id="stat-last-ad">Never</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Current Delay</div>
+                <div class="stat-value small" id="stat-delay">None</div>
+            </div>
+        </div>
+
+        <!-- Controls Section -->
+        <div class="btn-grid">
+            <button class="btn btn-start" id="btn-start" onclick="startAuto()">Start Auto Ads</button>
+            <button class="btn btn-stop" id="btn-stop" onclick="stopAuto()" disabled>Stop Auto Ads</button>
+            <button class="btn btn-pause" id="btn-pause" onclick="pauseAuto()" disabled>Pause</button>
+            <button class="btn btn-resume" id="btn-resume" onclick="resumeAuto()" disabled>Resume</button>
+            <button class="btn btn-reset" id="btn-reset" onclick="resetApp()">Reset</button>
+            <button class="btn btn-export" id="btn-export" onclick="exportStats()">Export Stats</button>
+        </div>
+
+        <!-- Settings Section -->
+        <div class="settings-panel">
+            <h3>Configuration Settings</h3>
+            <div class="settings-grid">
+                <div class="setting-group">
+                    <label>Ad Delay Min (s)</label>
+                    <input type="number" id="adDelayMin" value="5" min="1">
+                </div>
+                <div class="setting-group">
+                    <label>Ad Delay Max (s)</label>
+                    <input type="number" id="adDelayMax" value="10" min="2">
+                </div>
+                <div class="setting-group">
+                    <label>Reload Min (s)</label>
+                    <input type="number" id="reloadDelayMin" value="20" min="5">
+                </div>
+                <div class="setting-group">
+                    <label>Reload Max (s)</label>
+                    <input type="number" id="reloadDelayMax" value="35" min="6">
+                </div>
+                <div class="setting-group">
+                    <label>Max Reloads</label>
+                    <input type="number" id="maxReloads" value="10" min="1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Monetag SDK script should be included here -->
+    <!-- <script src="//monetag.com/xyz.js"></script> -->
+
+    <script>
+        /**
+         * State & Configuration
+         */
+        const defaultState = {
+            watchedAds: 0,
+            reloadCount: 0,
+            sessionCount: 0,
+            isRunning: false,
+            isPaused: false,
+            startTime: null,
+            lastAdTime: null,
+            totalRuntime: 0
+        };
+
+        let state = { ...defaultState };
+
+        let schedule = {
+            adShown: false,
+            adTimeLeft: 0,
+            reloadTimeLeft: 0,
+            totalReloadTime: 0,
+            lastUpdate: Date.now()
+        };
+
+        let timers = {
+            mainLoop: null,
+            human: null
+        };
+
+        /**
+         * Initialization & Lifecycle
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            loadConfigUI();
+            loadState();
+            startClock();
+            attachConfigListeners();
+
+            if (state.isRunning) {
+                if (state.reloadCount >= getConfig().maxReloads) {
+                    completeCycle();
+                } else {
+                    if (state.isPaused) {
+                        updateStatus("Paused");
+                        updateUI();
+                        document.getElementById('progress-text').innerText = "Paused";
+                    } else {
+                        // Automatically resume if it was running and not paused (e.g. after reload)
+                        generateNewSchedule();
+                        showToast("Resumed after reload", "info");
+                        runSchedule();
+                    }
+                }
+            } else {
+                updateStatus("Stopped");
+                updateUI();
+            }
+        });
+
+        function loadState() {
+            const s = localStorage.getItem('monetag_state');
+            if (s) state = { ...defaultState, ...JSON.parse(s) };
+        }
+
+        function saveState() {
+            localStorage.setItem('monetag_state', JSON.stringify(state));
+        }
+
+        function getConfig() {
+            let adMin = parseInt(document.getElementById('adDelayMin').value) || 5;
+            let adMax = parseInt(document.getElementById('adDelayMax').value) || 10;
+            let relMin = parseInt(document.getElementById('reloadDelayMin').value) || 20;
+            let relMax = parseInt(document.getElementById('reloadDelayMax').value) || 35;
+            
+            // Validate inputs
+            if (adMin > adMax) adMax = adMin;
+            if (relMin > relMax) relMax = relMin;
+            
+            return {
+                adDelayMin: adMin,
+                adDelayMax: adMax,
+                reloadDelayMin: relMin,
+                reloadDelayMax: relMax,
+                maxReloads: parseInt(document.getElementById('maxReloads').value) || 10
+            };
+        }
+
+        function saveConfig() {
+            localStorage.setItem('monetag_config', JSON.stringify(getConfig()));
+        }
+
+        function loadConfigUI() {
+            const c = localStorage.getItem('monetag_config');
+            if (c) {
+                const config = JSON.parse(c);
+                document.getElementById('adDelayMin').value = config.adDelayMin;
+                document.getElementById('adDelayMax').value = config.adDelayMax;
+                document.getElementById('reloadDelayMin').value = config.reloadDelayMin;
+                document.getElementById('reloadDelayMax').value = config.reloadDelayMax;
+                document.getElementById('maxReloads').value = config.maxReloads;
+            }
+        }
+
+        function attachConfigListeners() {
+            document.querySelectorAll('.settings-grid input').forEach(input => {
+                input.addEventListener('change', () => {
+                    saveConfig();
+                    showToast("Settings saved", "info");
+                    updateUI(); // update remaining reloads
+                });
+            });
+        }
+
+        /**
+         * Core Automation Logic
+         */
+        function startAuto() {
+            if (state.isRunning) return;
+            
+            // Check if we hit max reloads, if so reset reload count to start fresh
+            if (state.reloadCount >= getConfig().maxReloads) {
+                state.reloadCount = 0;
+            }
+
+            state.isRunning = true;
+            state.isPaused = false;
+            state.sessionCount++;
+            if (!state.startTime) state.startTime = Date.now();
+            saveState();
+            
+            generateNewSchedule();
+            showToast("Automation started", "success");
+            if (typeof show_11115482 === 'function') {
+                showAd();
+            }
+            runSchedule();
+        }
+
+        function generateNewSchedule() {
+            const config = getConfig();
+            schedule.adShown = false;
+            // Convert seconds to milliseconds
+            schedule.adTimeLeft = getRandom(config.adDelayMin, config.adDelayMax) * 1000;
+            schedule.reloadTimeLeft = getRandom(config.reloadDelayMin, config.reloadDelayMax) * 1000;
+            
+            // Ensure ad shows at least 2 seconds before reload
+            if (schedule.adTimeLeft >= schedule.reloadTimeLeft) {
+                schedule.adTimeLeft = Math.max(0, schedule.reloadTimeLeft - 2000);
+            }
+            
+            schedule.totalReloadTime = schedule.reloadTimeLeft;
+        }
+
+        function runSchedule() {
+            schedule.lastUpdate = Date.now();
+            startHumanSim();
+            updateStatus("Running");
+            updateUI();
+            
+            if (timers.mainLoop) clearInterval(timers.mainLoop);
+            
+            let lastSaveTime = Date.now();
+
+            timers.mainLoop = setInterval(() => {
+                const now = Date.now();
+                
+                if (state.isPaused || !state.isRunning) {
+                    schedule.lastUpdate = now;
+                    return;
+                }
+                
+                const delta = now - schedule.lastUpdate;
+                schedule.lastUpdate = now;
+                
+                // Update timers
+                schedule.reloadTimeLeft -= delta;
+                if (!schedule.adShown) {
+                    schedule.adTimeLeft -= delta;
+                    if (schedule.adTimeLeft <= 0) {
+                        showAd();
+                    }
+                }
+                
+                // Update Runtime
+                state.totalRuntime += delta;
+                
+                // Periodically save state and update UI to save performance
+                if (now - lastSaveTime > 1000) {
+                    lastSaveTime = now;
+                    saveState();
+                    updateRuntimeUI();
+                }
+                
+                updateProgressUI();
+                
+                // Check for reload
+                if (schedule.reloadTimeLeft <= 0) {
+                    clearInterval(timers.mainLoop);
+                    performReload();
+                }
+            }, 100);
+        }
+
+        function showAd() {
+            schedule.adShown = true;
+            
+            // Attempt to call the SDK function
+            if (typeof show_11115482 === 'function') {
+                try {
+                    show_11008419();
+                    recordAdSuccess();
+                } catch (e) {
+                    handleAdError(e);
+                }
+            } else {
+                // Mock behavior if function not available, normally you'd log error
+                showToast("SDK function not found. Retrying in 2s...", "error");
+                schedule.adShown = false;
+                schedule.adTimeLeft = 2000; // retry in 2 seconds
+            }
+        }
+
+        function recordAdSuccess() {
+            state.watchedAds++;
+            state.lastAdTime = Date.now();
+            saveState();
+            updateUI();
+            showToast("Ad displayed successfully", "success");
+        }
+
+        function handleAdError(e) {
+            showToast("Error showing ad: " + e.message, "error");
+            schedule.adShown = false;
+            schedule.adTimeLeft = 5000; // retry in 5s
+        }
+
+        function performReload() {
+            state.reloadCount++;
+            saveState();
+            
+            showToast("Reload scheduled...", "info");
+            document.getElementById('progress-text').innerText = "Reloading...";
+            
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        }
+
+        function completeCycle() {
+            state.isRunning = false;
+            state.isPaused = false;
+            saveState();
+            
+            updateStatus("Completed");
+            document.getElementById('progress-bar-fill').style.width = '100%';
+            document.getElementById('progress-text').innerText = "All reloads completed!";
+            showToast("Automation completed successfully", "success");
+            
+            clearInterval(timers.mainLoop);
+            clearInterval(timers.human);
+            updateUI();
+        }
+
+        /**
+         * Control Actions
+         */
+        function stopAuto() {
+            if (!state.isRunning) return;
+            
+            clearInterval(timers.mainLoop);
+            clearInterval(timers.human);
+            
+            state.isRunning = false;
+            state.isPaused = false;
+            saveState();
+            
+            document.getElementById('progress-bar-fill').style.width = '0%';
+            document.getElementById('progress-text').innerText = "Ready";
+            updateStatus("Stopped");
+            updateUI();
+            showToast("Automation stopped", "info");
+        }
+
+        function pauseAuto() {
+            if (!state.isRunning || state.isPaused) return;
+            
+            state.isPaused = true;
+            saveState();
+            
+            clearInterval(timers.human);
+            updateStatus("Paused");
+            updateUI();
+            document.getElementById('progress-text').innerText = "Paused";
+            showToast("Automation paused", "warning");
+        }
+
+        function resumeAuto() {
+            if (!state.isRunning || !state.isPaused) return;
+            
+            state.isPaused = false;
+            schedule.lastUpdate = Date.now(); // reset delta calculation
+            saveState();
+            
+            startHumanSim();
+            updateStatus("Running");
+            updateUI();
+            showToast("Automation resumed", "success");
+        }
+
+        function resetApp() {
+            if (confirm("Are you sure you want to reset all statistics and data?")) {
+                stopAuto();
+                state = { ...defaultState };
+                saveState();
+                
+                document.getElementById('progress-bar-fill').style.width = '0%';
+                document.getElementById('progress-text').innerText = "Ready";
+                
+                updateStatus("Stopped");
+                updateUI();
+                updateRuntimeUI();
+                showToast("App reset successfully", "info");
+            }
+        }
+
+        function exportStats() {
+            const data = {
+                totalAdsWatched: state.watchedAds,
+                reloadCount: state.reloadCount,
+                sessionCount: state.sessionCount,
+                startTime: state.startTime ? new Date(state.startTime).toISOString() : null,
+                lastAdTime: state.lastAdTime ? new Date(state.lastAdTime).toISOString() : null,
+                totalRuntimeSeconds: Math.floor(state.totalRuntime / 1000),
+                configuration: getConfig()
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `monetag-stats-${Date.now()}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast("Statistics exported", "info");
+        }
+
+        /**
+         * Human Behavior Simulation
+         */
+        function startHumanSim() {
+            if (timers.human) clearInterval(timers.human);
+            
+            timers.human = setInterval(() => {
+                if (state.isPaused || !state.isRunning) return;
+                
+                const action = Math.floor(Math.random() * 3);
+                try {
+                    if (action === 0) {
+                        // Simulate Scroll
+                        const maxScroll = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight) - window.innerHeight;
+                        if (maxScroll > 0) {
+                            const randomScroll = Math.floor(Math.random() * maxScroll);
+                            window.scrollTo({ top: randomScroll, behavior: 'smooth' });
+                        }
+                    } else if (action === 1) {
+                        // Simulate Mouse Movement
+                        const x = Math.floor(Math.random() * window.innerWidth);
+                        const y = Math.floor(Math.random() * window.innerHeight);
+                        const ev = new MouseEvent('mousemove', {
+                            view: window, bubbles: true, cancelable: true, clientX: x, clientY: y
+                        });
+                        document.dispatchEvent(ev);
+                    } else if (action === 2) {
+                        // Simulate Focus/Blur
+                        window.dispatchEvent(new Event('blur'));
+                        setTimeout(() => window.dispatchEvent(new Event('focus')), 500);
+                    }
+                } catch (e) {
+                    console.warn("Simulation error:", e);
+                }
+            }, 3000); // Trigger a random action every 3 seconds
+        }
+
+        /**
+         * UI Updates & Utilities
+         */
+        function updateUI() {
+            document.getElementById('stat-ads').innerText = state.watchedAds;
+            document.getElementById('stat-reloads').innerText = state.reloadCount;
+            document.getElementById('stat-sessions').innerText = state.sessionCount;
+            
+            const maxReloads = getConfig().maxReloads;
+            document.getElementById('stat-remaining').innerText = Math.max(0, maxReloads - state.reloadCount);
+            
+            document.getElementById('stat-last-ad').innerText = formatTime(state.lastAdTime);
+            updateRuntimeUI();
+            
+            // Buttons state
+            document.getElementById('btn-start').disabled = state.isRunning;
+            document.getElementById('btn-stop').disabled = !state.isRunning;
+            document.getElementById('btn-pause').disabled = !state.isRunning || state.isPaused;
+            document.getElementById('btn-resume').disabled = !state.isRunning || !state.isPaused;
+            
+            if (!state.isRunning) {
+                document.getElementById('stat-delay').innerText = "None";
+            }
+        }
+
+        function updateProgressUI() {
+            if (state.isPaused || !state.isRunning) return;
+            
+            const percent = Math.max(0, 100 - (schedule.reloadTimeLeft / schedule.totalReloadTime) * 100);
+            document.getElementById('progress-bar-fill').style.width = percent + '%';
+            
+            // Update delay text dynamically
+            if (!schedule.adShown) {
+                document.getElementById('stat-delay').innerText = `Ad in ${(Math.max(0, schedule.adTimeLeft) / 1000).toFixed(1)}s`;
+                document.getElementById('progress-text').innerText = `Waiting for Ad... (${(Math.max(0, schedule.adTimeLeft) / 1000).toFixed(1)}s)`;
+            } else {
+                document.getElementById('stat-delay').innerText = `Reload in ${(Math.max(0, schedule.reloadTimeLeft) / 1000).toFixed(1)}s`;
+                document.getElementById('progress-text').innerText = `Next reload in ${(Math.max(0, schedule.reloadTimeLeft) / 1000).toFixed(1)}s`;
+            }
+        }
+
+        function updateStatus(statusStr) {
+            const circle = document.getElementById('status-circle');
+            const text = document.getElementById('status-text');
+            
+            circle.className = 'status-circle'; // reset
+            if (statusStr === 'Running') circle.classList.add('running');
+            else if (statusStr === 'Paused') circle.classList.add('paused');
+            else if (statusStr === 'Completed') circle.classList.add('completed');
+            
+            text.innerText = statusStr;
+        }
+
+        function updateRuntimeUI() {
+            document.getElementById('runtime-counter').innerText = formatDuration(state.totalRuntime);
+        }
+
+        function startClock() {
+            const clockEl = document.getElementById('clock');
+            clockEl.innerText = new Date().toLocaleTimeString();
+            setInterval(() => {
+                clockEl.innerText = new Date().toLocaleTimeString();
+            }, 1000);
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerText = message;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 4000);
+        }
+
+        function formatTime(ms) {
+            if (!ms) return "Never";
+            return new Date(ms).toLocaleTimeString();
+        }
+
+        function formatDuration(ms) {
+            const totalSeconds = Math.floor(ms / 1000);
+            const h = Math.floor(totalSeconds / 3600);
+            const m = Math.floor((totalSeconds % 3600) / 60);
+            const s = totalSeconds % 60;
+            return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function getRandom(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Mock function for testing without SDK (Optional)
+        // Uncomment to test without actual SDK errors
+        /*
+        window.show_10500639 = function() {
+            console.log("Mock Ad Shown!");
+        };
+        */
+    </script>
+</body>
+</html>

@@ -5,442 +5,550 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auto Monetag Ads - Zone 11115482</title>
 
-<!-- Monetag SDK dengan zone 11115482 (UTAMA) -->
+<!-- Monetag SDK ZONE 11115482 (UTAMA) -->
 <script src='//libtl.com/sdk.js' data-zone='11115482' data-sdk='show_11115482'></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg-dark: #121212;
+            --card-bg: #1e1e1e;
+            --primary: #00c853;
+            --primary-hover: #00e676;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --danger: #f44336;
+            --warning: #ff9800;
+            --info: #2196f3;
+            --secondary: #333333;
+            --card-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
-        
+
         body {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-            color: #ffffff;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             font-family: 'Inter', sans-serif;
-            min-height: 100vh;
+            margin: 0;
             padding: 20px;
-        }
-        
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        
-        .card {
-            background: rgba(30, 30, 30, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        h1 {
-            font-size: 1.8rem;
-            text-align: center;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #00c853, #69f0ae);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .zone-badge {
-            text-align: center;
-            background: rgba(0,200,83,0.2);
-            padding: 8px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            font-size: 0.85rem;
-            color: #00c853;
-            font-family: monospace;
-        }
-        
-        .stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin: 25px 0;
-        }
-        
-        .stat {
-            background: rgba(0,0,0,0.3);
-            padding: 15px;
-            border-radius: 16px;
-            text-align: center;
-        }
-        
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #00c853;
-        }
-        
-        .stat-label {
-            font-size: 0.75rem;
-            color: #aaa;
-            margin-top: 5px;
-        }
-        
-        .btn-group {
             display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .dashboard {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            width: 100%;
+            max-width: 700px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .title-section h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.05);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .status-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--danger);
+            transition: all 0.3s ease;
+        }
+
+        .status-circle.running {
+            background-color: var(--primary);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background-color: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 12px;
             margin: 20px 0;
         }
-        
+
         .btn {
-            flex: 1;
-            padding: 14px;
+            padding: 12px 15px;
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
+            color: white;
             font-family: inherit;
         }
-        
-        .btn-start {
-            background: #00c853;
-            color: #000;
-        }
-        
-        .btn-stop {
-            background: #f44336;
-            color: white;
-        }
-        
-        .btn-test {
-            background: #2196f3;
-            color: white;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.1);
-        }
-        
+
         .btn:disabled {
             opacity: 0.5;
-            transform: none;
             cursor: not-allowed;
         }
-        
-        .status {
-            background: rgba(0,0,0,0.3);
-            padding: 12px;
+
+        .btn-start { background-color: var(--primary); color: #000; }
+        .btn-stop { background-color: var(--danger); }
+        .btn-pause { background-color: var(--warning); color: #000; }
+        .btn-resume { background-color: var(--info); }
+        .btn-reset { background-color: var(--secondary); }
+        .btn-export { background-color: transparent; border: 1px solid rgba(255,255,255,0.2); }
+
+        .settings-panel {
+            background-color: rgba(0,0,0,0.2);
             border-radius: 12px;
-            text-align: center;
+            padding: 20px;
             margin-top: 20px;
         }
-        
-        .status-running {
-            color: #00c853;
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
         }
-        
-        .status-stopped {
-            color: #f44336;
+
+        .setting-group input {
+            background-color: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            width: 100%;
         }
-        
-        .toast {
+
+        .toast-container {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: #333;
-            padding: 12px 20px;
-            border-radius: 12px;
-            animation: slideIn 0.3s ease;
             z-index: 1000;
-            border-left: 4px solid #00c853;
         }
-        
-        .toast.error {
-            border-left-color: #f44336;
+
+        .toast {
+            background-color: #2a2a2a;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 10px;
+            animation: slideIn 0.3s ease;
+            border-left: 4px solid var(--primary);
         }
-        
+
+        .toast.error { border-left-color: var(--danger); }
+
         @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        .log {
-            margin-top: 20px;
-            max-height: 200px;
-            overflow-y: auto;
-            font-size: 0.8rem;
-            background: rgba(0,0,0,0.2);
-            border-radius: 12px;
-            padding: 10px;
-        }
-        
-        .log-entry {
-            padding: 5px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-family: monospace;
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <h1>⚡ AUTO MONETAG</h1>
-            <div class="zone-badge">
-                🎯 ZONE ID UTAMA: <strong>11115482</strong> | show_11115482()
-            </div>
-            
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-value" id="adCount">0</div>
-                    <div class="stat-label">Iklan Ditampilkan</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value" id="sessionCount">0</div>
-                    <div class="stat-label">Total Sesi</div>
+    <div class="dashboard">
+        <div class="header">
+            <div class="title-section">
+                <h1>🎯 Auto Monetag Ads</h1>
+                <div class="status-indicator">
+                    <div class="status-circle" id="status-circle"></div>
+                    <span id="status-text">Stopped</span>
                 </div>
             </div>
-            
-            <div class="btn-group">
-                <button class="btn btn-start" id="startBtn" onclick="startAds()">▶ START</button>
-                <button class="btn btn-stop" id="stopBtn" onclick="stopAds()" disabled>⏹ STOP</button>
-                <button class="btn btn-test" id="testBtn" onclick="testAd()">🔍 TEST AD</button>
+            <div>Zone: <strong style="color:#00c853">11115482</strong></div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">WATCHED ADS</div>
+                <div class="stat-value" id="stat-ads">0</div>
             </div>
-            
-            <div class="status" id="status">
-                Status: <span id="statusText" class="status-stopped">Berhenti</span>
+            <div class="stat-card">
+                <div class="stat-label">RELOAD COUNT</div>
+                <div class="stat-value" id="stat-reloads">0</div>
             </div>
-            
-            <div class="log" id="log">
-                <div class="log-entry">📋 Log akan muncul di sini...</div>
+            <div class="stat-card">
+                <div class="stat-label">SESSION STARTS</div>
+                <div class="stat-value" id="stat-sessions">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">REMAINING RELOADS</div>
+                <div class="stat-value" id="stat-remaining">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">LAST AD TIME</div>
+                <div class="stat-value" id="stat-last-ad" style="font-size:0.9rem">Never</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">CURRENT DELAY</div>
+                <div class="stat-value" id="stat-delay" style="font-size:0.9rem">None</div>
+            </div>
+        </div>
+
+        <div class="btn-grid">
+            <button class="btn btn-start" id="btn-start" onclick="startAuto()">Start Auto Ads</button>
+            <button class="btn btn-stop" id="btn-stop" onclick="stopAuto()" disabled>Stop</button>
+            <button class="btn btn-pause" id="btn-pause" onclick="pauseAuto()" disabled>Pause</button>
+            <button class="btn btn-resume" id="btn-resume" onclick="resumeAuto()" disabled>Resume</button>
+            <button class="btn btn-reset" onclick="resetApp()">Reset</button>
+            <button class="btn btn-export" onclick="exportStats()">Export Stats</button>
+        </div>
+
+        <div class="settings-panel">
+            <h3>Configuration Settings</h3>
+            <div class="settings-grid">
+                <div class="setting-group">
+                    <label>Ad Delay Min (s)</label>
+                    <input type="number" id="adDelayMin" value="5" min="1">
+                </div>
+                <div class="setting-group">
+                    <label>Ad Delay Max (s)</label>
+                    <input type="number" id="adDelayMax" value="10" min="2">
+                </div>
+                <div class="setting-group">
+                    <label>Reload Min (s)</label>
+                    <input type="number" id="reloadDelayMin" value="20" min="5">
+                </div>
+                <div class="setting-group">
+                    <label>Reload Max (s)</label>
+                    <input type="number" id="reloadDelayMax" value="35" min="6">
+                </div>
+                <div class="setting-group">
+                    <label>Max Reloads</label>
+                    <input type="number" id="maxReloads" value="10" min="1">
+                </div>
             </div>
         </div>
     </div>
-    
-    <div id="toastContainer"></div>
+
+    <div id="toast-container" class="toast-container"></div>
 
     <script>
         // ============================================
         // ZONE UTAMA: 11115482
-        // Fungsi: show_11115482()
+        // FUNGSI YANG DIGUNAKAN: show_11115482()
         // ============================================
         
-        let adCount = 0;
-        let sessionCount = 0;
-        let isRunning = false;
-        let intervalId = null;
-        
-        // Ambil elemen DOM
-        const adCountEl = document.getElementById('adCount');
-        const sessionCountEl = document.getElementById('sessionCount');
-        const startBtn = document.getElementById('startBtn');
-        const stopBtn = document.getElementById('stopBtn');
-        const statusText = document.getElementById('statusText');
-        const logEl = document.getElementById('log');
-        
-        // Fungsi untuk menampilkan toast
-        function showToast(message, isError = false) {
-            const container = document.getElementById('toastContainer');
+        let state = {
+            watchedAds: 0,
+            reloadCount: 0,
+            sessionCount: 0,
+            isRunning: false,
+            isPaused: false,
+            startTime: null,
+            lastAdTime: null,
+            totalRuntime: 0
+        };
+
+        let schedule = {
+            adShown: false,
+            adTimeLeft: 0,
+            reloadTimeLeft: 0,
+            totalReloadTime: 0,
+            lastUpdate: Date.now()
+        };
+
+        let timers = {
+            mainLoop: null
+        };
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            toast.className = `toast ${isError ? 'error' : ''}`;
-            toast.innerHTML = message;
+            toast.className = `toast ${type === 'error' ? 'error' : ''}`;
+            toast.innerText = message;
             container.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
+            setTimeout(() => toast.remove(), 4000);
         }
-        
-        // Fungsi untuk menambah log
-        function addLog(message, isError = false) {
-            const logEntry = document.createElement('div');
-            logEntry.className = 'log-entry';
-            logEntry.style.color = isError ? '#f44336' : '#00c853';
-            logEntry.innerHTML = `[${new Date().toLocaleTimeString()}] ${message}`;
-            logEl.appendChild(logEntry);
-            logEl.scrollTop = logEl.scrollHeight;
-            
-            // Hapus log jika terlalu banyak
-            while (logEl.children.length > 50) {
-                logEl.removeChild(logEl.firstChild);
-            }
+
+        function getConfig() {
+            return {
+                adDelayMin: parseInt(document.getElementById('adDelayMin').value) || 5,
+                adDelayMax: parseInt(document.getElementById('adDelayMax').value) || 10,
+                reloadDelayMin: parseInt(document.getElementById('reloadDelayMin').value) || 20,
+                reloadDelayMax: parseInt(document.getElementById('reloadDelayMax').value) || 35,
+                maxReloads: parseInt(document.getElementById('maxReloads').value) || 10
+            };
         }
-        
-        // ============ FUNGSI UTAMA UNTUK MENAMPILKAN IKLAN ============
+
+        function getRandom(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // ============ PERBAIKAN UTAMA DI SINI ============
         function showAd() {
-            addLog('🔄 Mencoba menampilkan iklan...');
+            schedule.adShown = true;
             
-            // CEK FUNGSI SDK DENGAN ZONE 11115482
+            // MENGGUNAKAN ZONE 11115482 (BUKAN 11008419)
             if (typeof window.show_11115482 === 'function') {
                 try {
-                    addLog('✅ Memanggil show_11115482()');
-                    window.show_11115482();  // ← ZONE UTAMA 11115482
-                    
-                    // Update statistik
-                    adCount++;
-                    adCountEl.innerText = adCount;
-                    
-                    addLog(`🎉 Iklan berhasil ditampilkan! (Total: ${adCount})`);
-                    showToast('✅ Iklan ditampilkan!');
-                    
-                    return true;
-                } catch (error) {
-                    addLog(`❌ Error: ${error.message}`, true);
-                    showToast(`Error: ${error.message}`, true);
-                    return false;
+                    window.show_11115482();  // ✅ ZONE UTAMA 11115482
+                    state.watchedAds++;
+                    state.lastAdTime = Date.now();
+                    updateUI();
+                    showToast("✅ Ad displayed successfully");
+                    saveState();
+                } catch (e) {
+                    showToast("Error: " + e.message, "error");
+                    schedule.adShown = false;
+                    schedule.adTimeLeft = 5000;
                 }
             } else {
-                // SDK belum siap
-                addLog('⚠️ SDK show_11115482() belum tersedia', true);
-                addLog('💡 Pastikan script SDK berhasil dimuat', true);
-                showToast('SDK Monetag belum siap!', true);
+                showToast("⚠️ SDK show_11115482 not ready. Retrying...", "error");
+                schedule.adShown = false;
+                schedule.adTimeLeft = 3000;
                 
-                // Cek apakah ada fungsi lain
-                console.log('Available functions:', Object.keys(window).filter(k => k.includes('show_')));
-                
-                return false;
+                // Tampilkan fungsi yang tersedia untuk debugging
+                let available = Object.keys(window).filter(k => k.includes('show_'));
+                console.log("Available show_ functions:", available);
             }
         }
-        
-        // Fungsi test untuk mencoba iklan sekali
-        function testAd() {
-            addLog('🔬 TEST MODE: Mencoba iklan sekali...');
-            showAd();
+
+        function performReload() {
+            state.reloadCount++;
+            saveState();
+            showToast(`Reloading... (${state.reloadCount}/${getConfig().maxReloads})`);
+            setTimeout(() => window.location.reload(), 1000);
         }
-        
-        // Mulai auto ads (setiap 5-10 detik)
-        function startAds() {
-            if (isRunning) {
-                addLog('⚠️ Auto ads sudah berjalan');
-                return;
+
+        function generateNewSchedule() {
+            const config = getConfig();
+            schedule.adShown = false;
+            schedule.adTimeLeft = getRandom(config.adDelayMin, config.adDelayMax) * 1000;
+            schedule.reloadTimeLeft = getRandom(config.reloadDelayMin, config.reloadDelayMax) * 1000;
+            
+            if (schedule.adTimeLeft >= schedule.reloadTimeLeft) {
+                schedule.adTimeLeft = Math.max(0, schedule.reloadTimeLeft - 2000);
             }
+            schedule.totalReloadTime = schedule.reloadTimeLeft;
+        }
+
+        function runSchedule() {
+            schedule.lastUpdate = Date.now();
+            updateStatus("Running");
+            updateUI();
             
-            isRunning = true;
-            sessionCount++;
-            sessionCountEl.innerText = sessionCount;
+            if (timers.mainLoop) clearInterval(timers.mainLoop);
             
-            startBtn.disabled = true;
-            stopBtn.disabled = false;
-            statusText.innerText = 'Berjalan';
-            statusText.className = 'status-running';
-            
-            addLog('🚀 AUTO ADS DIMULAI (Zone: 11115482)');
-            addLog(`📊 Interval: 5-10 detik per iklan`);
-            showToast('Auto ads dimulai!');
-            
-            // Tampilkan iklan pertama
-            setTimeout(() => {
-                if (isRunning) showAd();
-            }, 2000);
-            
-            // Set interval random antara 5-10 detik
-            function scheduleNext() {
-                if (!isRunning) return;
+            timers.mainLoop = setInterval(() => {
+                if (state.isPaused || !state.isRunning) {
+                    schedule.lastUpdate = Date.now();
+                    return;
+                }
                 
-                const delay = Math.floor(Math.random() * 5000) + 5000; // 5-10 detik
-                addLog(`⏱ Next ad in ${(delay/1000).toFixed(1)}s`);
+                const delta = Date.now() - schedule.lastUpdate;
+                schedule.lastUpdate = Date.now();
                 
-                intervalId = setTimeout(() => {
-                    if (isRunning) {
+                schedule.reloadTimeLeft -= delta;
+                if (!schedule.adShown) {
+                    schedule.adTimeLeft -= delta;
+                    if (schedule.adTimeLeft <= 0) {
                         showAd();
-                        scheduleNext();
                     }
-                }, delay);
+                }
+                
+                state.totalRuntime += delta;
+                updateProgressUI();
+                
+                if (schedule.reloadTimeLeft <= 0) {
+                    if (state.reloadCount >= getConfig().maxReloads) {
+                        completeCycle();
+                    } else {
+                        clearInterval(timers.mainLoop);
+                        performReload();
+                    }
+                }
+            }, 100);
+        }
+
+        function completeCycle() {
+            state.isRunning = false;
+            state.isPaused = false;
+            saveState();
+            updateStatus("Completed");
+            showToast("All reloads completed!");
+            clearInterval(timers.mainLoop);
+            updateUI();
+        }
+
+        function startAuto() {
+            if (state.isRunning) return;
+            
+            if (state.reloadCount >= getConfig().maxReloads) {
+                state.reloadCount = 0;
             }
             
-            scheduleNext();
+            state.isRunning = true;
+            state.isPaused = false;
+            state.sessionCount++;
+            if (!state.startTime) state.startTime = Date.now();
+            saveState();
+            
+            generateNewSchedule();
+            showToast("Automation started");
+            runSchedule();
         }
-        
-        // Berhenti auto ads
-        function stopAds() {
-            if (!isRunning) return;
-            
-            isRunning = false;
-            
-            if (intervalId) {
-                clearTimeout(intervalId);
-                intervalId = null;
+
+        function stopAuto() {
+            if (!state.isRunning) return;
+            clearInterval(timers.mainLoop);
+            state.isRunning = false;
+            state.isPaused = false;
+            saveState();
+            updateStatus("Stopped");
+            updateUI();
+            showToast("Automation stopped");
+        }
+
+        function pauseAuto() {
+            if (!state.isRunning || state.isPaused) return;
+            state.isPaused = true;
+            saveState();
+            updateStatus("Paused");
+            showToast("Automation paused");
+        }
+
+        function resumeAuto() {
+            if (!state.isRunning || !state.isPaused) return;
+            state.isPaused = false;
+            schedule.lastUpdate = Date.now();
+            saveState();
+            updateStatus("Running");
+            showToast("Automation resumed");
+        }
+
+        function resetApp() {
+            if (confirm("Reset all statistics?")) {
+                stopAuto();
+                state = {
+                    watchedAds: 0,
+                    reloadCount: 0,
+                    sessionCount: 0,
+                    isRunning: false,
+                    isPaused: false,
+                    startTime: null,
+                    lastAdTime: null,
+                    totalRuntime: 0
+                };
+                saveState();
+                updateUI();
+                showToast("App reset");
             }
-            
-            startBtn.disabled = false;
-            stopBtn.disabled = true;
-            statusText.innerText = 'Berhenti';
-            statusText.className = 'status-stopped';
-            
-            addLog('🛑 AUTO ADS DIHENTIKAN');
-            showToast('Auto ads dihentikan');
         }
-        
-        // Cek ketersediaan SDK saat halaman dimuat
+
+        function exportStats() {
+            const data = {
+                zone: "11115482",
+                totalAds: state.watchedAds,
+                reloadCount: state.reloadCount,
+                sessionCount: state.sessionCount,
+                config: getConfig()
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `monetag-11115482-stats.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast("Stats exported");
+        }
+
+        function updateUI() {
+            document.getElementById('stat-ads').innerText = state.watchedAds;
+            document.getElementById('stat-reloads').innerText = state.reloadCount;
+            document.getElementById('stat-sessions').innerText = state.sessionCount;
+            document.getElementById('stat-remaining').innerText = Math.max(0, getConfig().maxReloads - state.reloadCount);
+            document.getElementById('stat-last-ad').innerText = state.lastAdTime ? new Date(state.lastAdTime).toLocaleTimeString() : "Never";
+            
+            document.getElementById('btn-start').disabled = state.isRunning;
+            document.getElementById('btn-stop').disabled = !state.isRunning;
+            document.getElementById('btn-pause').disabled = !state.isRunning || state.isPaused;
+            document.getElementById('btn-resume').disabled = !state.isRunning || !state.isPaused;
+        }
+
+        function updateProgressUI() {
+            if (!schedule.adShown && !state.isPaused && state.isRunning) {
+                document.getElementById('stat-delay').innerText = `Ad in ${(Math.max(0, schedule.adTimeLeft) / 1000).toFixed(1)}s`;
+            } else if (state.isRunning && !state.isPaused) {
+                document.getElementById('stat-delay').innerText = `Reload in ${(Math.max(0, schedule.reloadTimeLeft) / 1000).toFixed(1)}s`;
+            }
+        }
+
+        function updateStatus(statusStr) {
+            const circle = document.getElementById('status-circle');
+            const text = document.getElementById('status-text');
+            circle.className = 'status-circle';
+            if (statusStr === 'Running') circle.classList.add('running');
+            text.innerText = statusStr;
+        }
+
+        function saveState() {
+            localStorage.setItem('monetag_11115482_state', JSON.stringify(state));
+        }
+
+        function loadState() {
+            const saved = localStorage.getItem('monetag_11115482_state');
+            if (saved) state = { ...state, ...JSON.parse(saved) };
+        }
+
+        // Cek SDK saat halaman dimuat
         function checkSDK() {
-            addLog('🔍 Mengecek SDK Monetag...');
-            
             setTimeout(() => {
                 if (typeof window.show_11115482 === 'function') {
-                    addLog('✅ SDK MONETAG SIAP!');
-                    addLog('🎯 Zone ID: 11115482 siap digunakan');
-                    addLog('💡 Klik START untuk memulai auto ads');
-                    showToast('✅ SDK Monetag siap!');
+                    showToast("✅ SDK Zone 11115482 ready!");
                 } else {
-                    addLog('❌ SDK Monetag TIDAK DITEMUKAN', true);
-                    addLog('💡 Periksa:');
-                    addLog('   1. Koneksi internet', true);
-                    addLog('   2. Domain libtl.com bisa diakses', true);
-                    addLog('   3. Tidak ada adblocker', true);
-                    showToast('⚠️ SDK gagal dimuat! Cek koneksi', true);
-                    
-                    // Tampilkan fungsi yang tersedia untuk debugging
-                    const showFuncs = Object.keys(window).filter(k => k.includes('show_'));
-                    if (showFuncs.length > 0) {
-                        addLog(`📋 Fungsi show_ tersedia: ${showFuncs.join(', ')}`);
-                    }
+                    showToast("⚠️ SDK Zone 11115482 not found! Check connection", "error");
+                    console.log("Available functions:", Object.keys(window).filter(k => k.includes('show_')));
                 }
             }, 2000);
         }
-        
-        // Inisialisasi
-        function init() {
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadState();
+            updateUI();
             checkSDK();
-            
-            // Load data dari localStorage
-            const saved = localStorage.getItem('monetag_11115482');
-            if (saved) {
-                try {
-                    const data = JSON.parse(saved);
-                    adCount = data.adCount || 0;
-                    sessionCount = data.sessionCount || 0;
-                    adCountEl.innerText = adCount;
-                    sessionCountEl.innerText = sessionCount;
-                    addLog(`📀 Loaded stats: ${adCount} ads dari session sebelumnya`);
-                } catch(e) {}
-            }
-        }
-        
-        // Simpan data setiap ada perubahan
-        function saveData() {
-            localStorage.setItem('monetag_11115482', JSON.stringify({
-                adCount: adCount,
-                sessionCount: sessionCount,
-                lastUpdate: new Date().toISOString()
-            }));
-        }
-        
-        // Auto save setiap detik
-        setInterval(saveData, 1000);
-        
-        // Start
-        init();
-        
-        // Cleanup saat page ditutup
-        window.addEventListener('beforeunload', () => {
-            if (isRunning) stopAds();
         });
     </script>
 </body>
